@@ -2,6 +2,7 @@
     --sari: #fee996;
     --header-h: 76px;
 }
+
 .header {
     background: var(--sari);
     position: relative;
