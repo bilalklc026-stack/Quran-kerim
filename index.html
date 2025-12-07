@@ -3,26 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kuran-ı Kerim Online</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Kuran-ı Kerim Rehberi</title>
+    <style>
+        /* CSS Başlangıcı */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: white; /* Diğer kısımlar beyaz olsun */
+        }
+        header {
+            background-color: #FFFACD; /* Açık Sarı */
+            padding: 10px 20px;
+            display: flex;
+            justify-content: flex-end; /* Logo en sağa */
+            align-items: center;
+        }
+        .logo-container {
+            cursor: pointer;
+        }
+        .logo {
+            width: 60px; /* İdeal boyut örneği */
+            height: auto;
+            display: block;
+        }
+        .divider {
+            height: 2px;
+            background-color: black; /* Siyah çizgi */
+            margin-bottom: 20px;
+        }
+        .content {
+            padding: 20px;
+        }
+        /* Footer da açık sarı olsun */
+        footer {
+            background-color: #FFFACD; /* Açık Sarı */
+            padding: 15px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        /* Buraya 4 Bant (Sekme/Navigasyon) CSS'i eklenecek */
+    </style>
 </head>
 <body>
-    <div class="header">
-        <div class="logo-container">
-            <img src="logo.png" id="site-logo" alt="Site Logosu" />
-            <hr class="logo-underline" />
+
+    <header>
+        <a href="index.html" class="logo-container">
+            <img src="https://share.icloud.com/photos/0bdpqt5QAnJY0MCSP9YMqAjwg" alt="Kuran Sitesi Logo" class="logo">
+        </a>
+    </header>
+
+    <div class="divider"></div>
+
+    <main class="content">
+        <h2>Kuran-ı Kerim Sayfa Seçimi</h2>
+
+        <div class="nav-bands">
+            <section id="pages-band">
+                <h3>1. Sayfalar</h3>
+                <select id="page-select">
+                    <option value="1">Sayfa 1</option>
+                    <option value="2">Sayfa 2</option>
+                    </select>
+                <button id="go-to-page">Git</button>
+            </section>
+            
+            <section id="ayah-band">
+                <h3>4. Ayetler</h3>
+                <select id="ayah-select">
+                    </select>
+                <button id="go-to-ayah">Git</button>
+            </section>
         </div>
-        <h1>Kuran-ı Kerim</h1>
-    </div>
-    <div class="selector-bar">
-        <button class="selector" id="page-tab">Sayfalar</button>
-        <button class="selector" id="surah-tab">Sureler</button>
-        <button class="selector" id="juz-tab">Cüzler</button>
-        <button class="selector" id="ayah-tab">Ayetler</button>
-    </div>
-    <div class="select-area" id="select-area"></div>
-    <div class="display-area" id="display-area"></div>
-    <footer><div class="footer-inner">&copy; 2025 Kuran-ı Kerim Online</div></footer>
-    <script src="script.js"></script>
+
+        <hr>
+
+        <div id="quran-text">
+            </div>
+
+    </main>
+
+    <footer>
+        <p>© 2025 Kuran-ı Kerim Projesi</p>
+    </footer>
+
+    <script src="app.js"></script> 
 </body>
 </html>
