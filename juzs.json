@@ -1,0 +1,7 @@
+[
+  { "juz_number": 1, "name_ar": "الجزء الأول", "start_surah": "الفاتحة", "start_ayah": 1 },
+  { "juz_number": 2, "name_ar": "الجزء الثاني", "start_surah": "البقرة", "start_ayah": 142 },
+  { "juz_number": 3, "name_ar": "الجزء الثالث", "start_surah": "البقرة", "start_ayah": 253 },
+  { "juz_number": 4, "name_ar": "الجزء الرابع", "start_surah": "آل عمران", "start_ayah": 93 },
+  { "juz_number": 5, "name_ar": "الجزء الخامس", "start_surah": "النساء", "start_ayah": 24 }
+]
