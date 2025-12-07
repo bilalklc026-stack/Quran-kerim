@@ -1,141 +1,126 @@
-:root {
-    --sari: #fee996;
-    --header-h: 76px;
-}
-
-.header {
-    background: var(--sari);
-    position: relative;
-    height: var(--header-h);
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    border-bottom: 4px solid #222;
-    padding-right: 2rem;
-    padding-left: 1rem;
-}
-.header h1 {
-    flex: 2;
-    text-align: left;
-    font-size: 2rem;
-    margin: 0 0 0 20px;
-    color: #784b12;
-}
-.logo-container {
-    position: relative;
-    display: flex; 
-    flex-direction: column; 
-    align-items: flex-end;
-}
-#site-logo {
-    width: 64px;
-    height: 64px;
-    cursor: pointer;
-    object-fit: contain;
-}
-.logo-underline {
-    border: none;
-    border-top: 3px solid #111;
-    width: 50%;
-    margin: 2px 0 0 36px;
-    background: none;
-}
-.selector-bar {
-    display: flex;
-    gap: 1rem;
-    margin-top: 12px;
-    background: #fff;
-    padding: 12px 0 8px 0;
-    justify-content: center;
-}
-.selector {
-    background: #f8d66c;
-    color: #333;
-    border: none;
-    padding: 10px 26px;
-    font-size: 1.1rem;
-    border-radius: 20px 20px 0 0;
-    font-weight: bold;
-    cursor: pointer;
-    transition: box-shadow 0.2s, background 0.2s;
-}
-.selector.active,
-.selector:hover {
-    background: #fee996;
-    box-shadow: 0 4px 8px rgba(250,220,120,0.18);
-}
-.select-area,
-.display-area {
-    background: #fff;
-    max-width: 720px;
-    margin: 0 auto;
-    border-radius: 0 0 15px 15px;
-    min-height: 80px;
-    padding: 32px 24px 24px 24px;
-    box-sizing: border-box;
-    margin-top: 0;
-    box-shadow: 0 0 18px 2px rgba(60,40,10,0.06);
-}
-.select-area {
-    border-bottom: 2px solid #eee;
-}
-.ayat-page-layout {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 20px 12px;
-}
-.ayat-box {
-    background: linear-gradient(110deg, #fbf6e7 70%, #f7ecd2 100%);
-    border-radius: 10px;
-    padding: 14px 18px;
-    width: 44%;
-    margin: 0 auto 12px auto;
-    box-shadow: 0 4px 12px rgba(151,116,44,0.07);
-    border: 1.5px solid #faefa1;
-}
-.ayat-number {
-    float: left;
-    font-weight: bold;
-    color: #b48e2b;
-    margin-right: 7px;
-}
-.ayat-box .surah {
-    font-size: 0.98em;
-    color: #a97e2c;
-    font-style: italic;
-}
-.ayat-text {
-    font-size: 1.19rem;
-    line-height: 1.7;
-    color: #222;
-    margin-top: 10px;
-}
-footer {
-    width: 100vw;
-    background: var(--sari);
-    min-height: 60px;
-    padding: 18px 0 10px 0;
-    margin-top: 34px;
-    position: relative;
-}
-footer .footer-inner {
-    text-align: center;
-    font-size: 1.11rem;
-    color: #784b12;
-}
-@media (max-width: 700px) {
-    .ayat-page-layout .ayat-box {
-        width: 100%;
-    }
-    .selector-bar { flex-direction: column; align-items: center; }
-    .select-area,
-    .display-area { padding: 18px 4px 18px 4px;}
-    #site-logo { width: 40px; height: 40px;}
-}
+/* GENEL STİLLER VE RENK PALETİ */
 body {
     margin: 0;
-    background: #fff;
-    font-family: 'Segoe UI', Arial, sans-serif;
-    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #FFFFFF; /* Sayfa arkaplanı: Beyaz */
+    color: #333; /* Metin rengi */
+}
+
+/* AÇIK SARI RENK TANIMLARI */
+/* Açık sarı tonu olarak hafif, krem rengine yakın bir sarı seçildi. */
+:root {
+    --acik-sari: #FFFACD; /* Lemon Chiffon - Çok açık ve okunaklı bir sarı */
+    --siyah: #000000;
+}
+
+/* BAŞLIK (HEADER) VE LOGO */
+header {
+    background-color: var(--acik-sari); /* Çizginin üstü Açık Sarı */
+    padding: 10px 20px;
+    display: flex;
+    justify-content: flex-end; /* Logo en sağa */
+    align-items: center;
+    position: sticky; /* İsteğe bağlı: Başlığı en üste sabitlemek için */
+    top: 0;
+    z-index: 100;
+}
+
+.logo-container {
+    cursor: pointer;
+    /* Logo fotoğrafınızın ideal boyutu: 60x60 veya benzeri */
+}
+
+.logo {
+    width: 60px; 
+    height: 60px;
+    border-radius: 8px; /* Yumuşak bir köşe eklendi */
+}
+
+/* AYIRICI SİYAH ÇİZGİ */
+.divider {
+    height: 2px;
+    background-color: var(--siyah); /* Siyah çizgi */
+    margin-bottom: 30px; /* İçerikle arasında boşluk bırakır */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* ANA İÇERİK */
+.content {
+    padding: 20px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* 4 NAVİGASYON BANDI İÇİN STİLLER */
+.nav-bands {
+    display: flex;
+    gap: 20px; /* Bantlar arası boşluk */
+    flex-wrap: wrap; /* Küçük ekranlarda alta kayması için */
+    margin-bottom: 40px;
+}
+
+.nav-band-item {
+    flex: 1 1 200px; /* Her bir bandın esnek genişliği (Minimum 200px) */
+    background-color: #F8F8F8; /* Hafif bir gri arkaplan */
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #EEE;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s;
+}
+
+.nav-band-item:hover {
+    transform: translateY(-2px); /* Hafif yukarı kalkma efekti */
+}
+
+.nav-band-item h3 {
+    margin-top: 0;
+    color: #4CAF50; /* Başlık rengi olarak yeşil tonu kullanılabilir (İslami tema) */
+    border-bottom: 1px solid #DDD;
+    padding-bottom: 5px;
+    font-size: 1.1em;
+}
+
+/* SEÇİM ALANLARI VE BUTONLAR */
+select, button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+select {
+    border: 1px solid #CCC;
+}
+
+button {
+    background-color: #4CAF50; /* Yeşil butonda beyaz yazı */
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* KURAN METNİ GÖSTERİM ALANI */
+#quran-text {
+    padding-top: 20px;
+    line-height: 2.2; /* Ayetler arası okuma kolaylığı için satır aralığı */
+    font-size: 1.4em;
+    direction: rtl; /* Arapça metin sağdan sola akmalıdır */
+    text-align: justify;
+}
+
+/* ALT KISIM (FOOTER) */
+footer {
+    background-color: var(--acik-sari); /* En altta Açık Sarı olsun */
+    padding: 20px;
+    text-align: center;
+    color: #555;
+    margin-top: 50px;
 }
