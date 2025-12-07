@@ -3,24 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diyanet Kur'an Ayetleri</title>
+    <title>Kuran-ı Kerim | Online</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Kur'an Ayetlerini Görüntüleme</h1>
-        <p>Görüntülemek istediğiniz cüz numarasını (1-30 arası) giriniz.</p>
-        
-        <input type="number" id="juz-input" min="1" max="30" placeholder="Örn: 5">
-        <button id="fetch-button">Ayetleri Getir</button>
-        
-        <hr>
-        
-        <div id="verse-output">
-            <p>Sonuçlar burada listelenecektir.</p>
+    <div class="header">
+        <div class="logo-container">
+            <img src="logo.png" id="site-logo" alt="Site Logosu" />
+            <hr class="logo-underline" />
         </div>
+        <h1>Kuran-ı Kerim Ayetleri</h1>
     </div>
-    
+    <div class="selector-bar">
+        <button class="selector" id="page-tab">Sayfalar</button>
+        <button class="selector" id="surah-tab">Sureler</button>
+        <button class="selector" id="juz-tab">Cüzler</button>
+        <button class="selector" id="ayah-tab">Ayetler</button>
+    </div>
+
+    <div class="select-area" id="select-area">
+        <!-- Dinamik içerik burada oluşacak -->
+    </div>
+
+    <div class="display-area" id="display-area">
+        <!-- Sonuçlar burada gösterilecek -->
+    </div>
+
+    <footer>
+        <div class="footer-inner">
+            <span>&copy; 2025 Kuran-ı Kerim Online</span>
+        </div>
+    </footer>
     <script src="script.js"></script>
 </body>
 </html>
