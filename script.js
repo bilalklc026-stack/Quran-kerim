@@ -1,118 +1,122 @@
-const PAGE_API = "https://semarketir.github.io/quranjson-web/pages/index.json";
-const JUZ_API = "https://semarketir.github.io/quranjson-web/juzs/index.json";
-const SURAH_API = "https://semarketir.github.io/quranjson-web/surahs/index.json";
-const AYAH_API_ROOT = "https://semarketir.github.io/quranjson-web/ayahs/";
+// app.js - Tek Dosya Çözümü
 
-const selectArea = document.getElementById("select-area");
-const displayArea = document.getElementById("display-area");
-const tabs = {
-    page: document.getElementById("page-tab"),
-    surah: document.getElementById("surah-tab"),
-    juz: document.getElementById("juz-tab"),
-    ayah: document.getElementById("ayah-tab"),
-};
-const logo = document.getElementById("site-logo");
-logo.addEventListener('click', () => window.location.reload());
+// =========================================================
+// I. VERİ YAPISI (Data Structure)
+// Kuran'daki Sure ve Cüz bilgilerini navigasyon için tutar.
+// =========================================================
 
-Object.values(tabs).forEach(btn => btn.classList.remove('active'));
-tabs.page.classList.add('active');
-initPage();
+const quranData = [
+    // Sure: No, Adı, Ayet Sayısı, Başlangıç Sayfası, Cüz No
+    { sureNo: 1, sureAdi: "Fâtiha", ayetSayisi: 7, baslangicSayfa: 1, baslangicCuz: 1 },
+    { sureNo: 2, sureAdi: "Bakara", ayetSayisi: 286, baslangicSayfa: 2, baslangicCuz: 1 },
+    { sureNo: 3, sureAdi: "Âl-i İmrân", ayetSayisi: 200, baslangicSayfa: 50, baslangicCuz: 3 },
+    { sureNo: 4, sureAdi: "Nisâ", ayetSayisi: 176, baslangicSayfa: 77, baslangicCuz: 4 },
+    // ... DİKKAT: Diğer 110 sure buraya eklenmelidir ...
+    { sureNo: 114, sureAdi: "Nâs", ayetSayisi: 6, baslangicSayfa: 604, baslangicCuz: 30 } 
+];
 
-tabs.page.onclick = () => { setActiveTab('page'); initPage(); }
-tabs.surah.onclick = () => { setActiveTab('surah'); initSurah(); }
-tabs.juz.onclick = () => { setActiveTab('juz'); initJuz(); }
-tabs.ayah.onclick = () => { setActiveTab('ayah'); initAyah(); }
+const cuzData = [
+    // Cüz: No, Başlangıç Sayfası
+    { cuzNo: 1, baslangicSayfa: 1 },
+    { cuzNo: 2, baslangicSayfa: 22 },
+    { cuzNo: 3, baslangicSayfa: 42 },
+    // ... DİKKAT: Diğer 27 cüz buraya eklenmelidir ...
+    { cuzNo: 30, baslangicSayfa: 582 } 
+];
 
-function setActiveTab(tab) {
-    Object.values(tabs).forEach(btn => btn.classList.remove('active'));
-    tabs[tab].classList.add('active');
-    selectArea.innerHTML = "";
-    displayArea.innerHTML = "";
+// =========================================================
+// II. UYGULAMA MANTIK (Application Logic)
+// HTML elemanlarını seçer, doldurur ve kaydırma yapar.
+// =========================================================
+
+// HTML elemanlarını seçme
+const pageSelect = document.getElementById('page-select');
+const sureSelect = document.getElementById('sure-select');
+const cuzSelect = document.getElementById('cuz-select');
+const ayahSelect = document.getElementById('ayah-select');
+
+// Tüm seçim kutularını dolduran ana fonksiyon
+function populateSelections() {
+    // 1. Sayfalar (1'den 604'e kadar)
+    for (let i = 1; i <= 604; i++) {
+        pageSelect.innerHTML += `<option value="${i}">Sayfa ${i}</option>`;
+    }
+
+    // 2. Sureler (quranData'dan çekilir)
+    quranData.forEach(sure => {
+        sureSelect.innerHTML += `<option value="${sure.sureNo}">${sure.sureNo}. ${sure.sureAdi}</option>`;
+    });
+
+    // 3. Cüzler (cuzData'dan çekilir)
+    cuzData.forEach(cuz => {
+        cuzSelect.innerHTML += `<option value="${cuz.cuzNo}">${cuz.cuzNo}. Cüz</option>`;
+    });
+    
+    // Sayfa yüklendiğinde Ayet seçimini ilk sure (Fatiha) için doldur
+    updateAyahSelection(); 
 }
 
-// Sayfalar
-async function initPage() {
-    selectArea.innerHTML = `<label>Sayfa No: <select id="page-select"></select></label>
-    <button id="show-page-btn">Sayfayı Göster</button>`;
-    const pages = await fetch(PAGE_API).then(r => r.json());
-    document.getElementById("page-select").innerHTML = pages.map(p =>
-        `<option value="${p.page}">${p.page}</option>`).join("");
-    document.getElementById("show-page-btn").onclick = async () => {
-        const pageNum = document.getElementById("page-select").value;
-        displayArea.innerHTML = '<em>Sayfa yükleniyor...</em>';
-        const page = pages.find(p => p.page == pageNum);
-        let ayahList = [];
-        for(let i=page.start; i<=page.end; i++) {
-            let ayahData = await fetch(AYAH_API_ROOT + `${i}.json`).then(res=>res.json());
-            ayahList.push(ayahData);
+// 4. Ayetler: Seçilen Sureye göre Ayet listesini günceller
+function updateAyahSelection() {
+    // Sure seçili değilse varsayılan olarak Fatiha'yı kullan
+    const selectedSureNo = parseInt(sureSelect.value || 1); 
+    const sure = quranData.find(s => s.sureNo === selectedSureNo);
+    
+    ayahSelect.innerHTML = ''; 
+
+    if (sure) {
+        for (let i = 1; i <= sure.ayetSayisi; i++) {
+            ayahSelect.innerHTML += `<option value="${i}">Ayet ${i}</option>`;
         }
-        displayAyatList(ayahList, `Sayfa ${pageNum}`);
     }
 }
 
-// Sureler
-async function initSurah() {
-    selectArea.innerHTML = `<label>Sure: <select id="surah-select"></select></label>
-    <button id="show-surah-btn">Sureyi Göster</button>`;
-    const surahs = await fetch(SURAH_API).then(r => r.json());
-    document.getElementById("surah-select").innerHTML = surahs.map(s =>
-        `<option value="${s.id}">${s.id}. ${s.name}</option>`).join("");
-    document.getElementById("show-surah-btn").onclick = async () => {
-        const surahId = document.getElementById("surah-select").value;
-        displayArea.innerHTML = '<em>Sure yükleniyor...</em>';
-        const surahObj = surahs.find(s => s.id == surahId);
-        let ayahList = [];
-        for(let n = surahObj.start; n <= surahObj.end; n++) {
-            let ayahData = await fetch(AYAH_API_ROOT + `${n}.json`).then(res=>res.json());
-            ayahList.push(ayahData);
-        }
-        displayAyatList(ayahList, `${surahObj.name} Suresi`);
+// Seçilen ID'ye yumuşak kaydırma yapan temel fonksiyon
+function scrollToTarget(targetId) {
+    const targetElement = document.getElementById(targetId);
+    if (targetElement) {
+        targetElement.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'start'      
+        });
+    } else {
+        alert(`Hata: Hedef ID (${targetId}) bulunamadı. Lütfen Kuran metninin doğru ID'ler ile yüklendiğinden emin olun.`);
     }
 }
 
-// Cüzler
-async function initJuz() {
-    selectArea.innerHTML = `<label>Cüz No: <select id="juz-select"></select></label>
-    <button id="show-juz-btn">Cüzü Göster</button>`;
-    const juzList = await fetch(JUZ_API).then(r => r.json());
-    document.getElementById("juz-select").innerHTML = juzList.map(j => `<option value="${j.id}">${j.id}</option>`).join("");
-    document.getElementById("show-juz-btn").onclick = async () => {
-        const juzId = document.getElementById("juz-select").value;
-        displayArea.innerHTML = '<em>Cüz yükleniyor...</em>';
-        const juzObj = juzList.find(j => j.id == juzId);
-        let ayahList = [];
-        for(let n = juzObj.start; n <= juzObj.end; n++) {
-            let ayahData = await fetch(AYAH_API_ROOT + `${n}.json`).then(res=>res.json());
-            ayahList.push(ayahData);
-        }
-        displayAyatList(ayahList, `Cüz ${juzId}`);
-    }
-}
+// --- NAVİGASYON (GIT BUTONLARI) İŞLEMLERİ ---
 
-// Ayetler
-function initAyah() {
-    selectArea.innerHTML = `
-        <label>Ayet No: <input id="ayah-input" type="number" min="1" placeholder="Ayet numarası"></label>
-        <button id="show-ayah-btn">Ayetleri Göster</button>
-    `;
-    document.getElementById("show-ayah-btn").onclick = async () => {
-        const num = document.getElementById("ayah-input").value;
-        if (!num || num < 1 || num > 6236) return displayArea.innerHTML = "<em>Doğru aralıkta ayet numarası giriniz (1-6236).</em>";
-        displayArea.innerHTML = '<em>Ayet yükleniyor...</em>';
-        let ayahData = await fetch(AYAH_API_ROOT + `${num}.json`).then(res=>res.json());
-        displayAyatList([ayahData], `Ayet No: ${num}`);
-    }
-}
+document.getElementById('go-to-page').addEventListener('click', () => {
+    const pageNo = pageSelect.value;
+    scrollToTarget(`page-${pageNo}`); // Hedef ID: page-1
+});
 
-function displayAyatList(ayatList, title) {
-    if (!Array.isArray(ayatList) || ayatList.length === 0)
-        return displayArea.innerHTML = "<em>Herhangi bir ayet bulunamadı.</em>";
-    displayArea.innerHTML = `<h2>${title}</h2>
-    <div class="ayat-page-layout">
-        ${ayatList.map(a => `<div class="ayat-box">
-            <span class="ayat-number">${a.verse_number}</span>
-            <span class="surah">${a.surah_name}</span>
-            <div class="ayat-text">${a.text}</div>
-        </div>`).join("")}
-    </div>`;
-}
+document.getElementById('go-to-sure').addEventListener('click', () => {
+    const sureNo = parseInt(sureSelect.value);
+    const sure = quranData.find(s => s.sureNo === sureNo);
+    if (sure) {
+        scrollToTarget(`page-${sure.baslangicSayfa}`); // Sure'nin başladığı sayfaya git
+    }
+});
+
+document.getElementById('go-to-cuz').addEventListener('click', () => {
+    const cuzNo = parseInt(cuzSelect.value);
+    const cuz = cuzData.find(c => c.cuzNo === cuzNo);
+    if (cuz) {
+        scrollToTarget(`page-${cuz.baslangicSayfa}`); // Cüz'ün başladığı sayfaya git
+    }
+});
+
+document.getElementById('go-to-ayah').addEventListener('click', () => {
+    const sureNo = sureSelect.value;
+    const ayetNo = ayahSelect.value;
+    // Ayet ID formatı: s[SureNo]a[AyetNo] Örn: s2a255
+    const targetId = `s${sureNo}a${ayetNo}`; 
+    scrollToTarget(targetId);
+});
+
+// Sure seçimi değiştiğinde Ayet listesini otomatik güncelle
+sureSelect.addEventListener('change', updateAyahSelection);
+
+// Sayfa tamamen yüklendiğinde fonksiyonları çalıştır
+document.addEventListener('DOMContentLoaded', populateSelections);
