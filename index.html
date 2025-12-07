@@ -1,31 +1,30 @@
-DOCTYPE html>
+<!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kuran-ı Kerim Rehberi</title>
+    <title>Kuran-ı Kerim Navigasyonu</title>
 
     <style>
         /* GENEL STİLLER VE RENK PALETİ */
         body {
             margin: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #FFFFFF; /* Sayfa arkaplanı: Beyaz */
+            background-color: #FFFFFF; /* Beyaz */
             color: #333;
         }
 
-        /* AÇIK SARI RENK TANIMLARI */
         :root {
-            --acik-sari: #FFFACD; /* Lemon Chiffon */
+            --acik-sari: #FFFACD; /* Açık Sarı */
             --siyah: #000000;
         }
 
-        /* BAŞLIK (HEADER) VE LOGO */
+        /* --- BAŞLIK (HEADER) VE LOGO --- */
         header {
             background-color: var(--acik-sari); /* Çizginin üstü Açık Sarı */
             padding: 10px 20px;
             display: flex;
-            justify-content: flex-end; /* Logo en sağa */
+            justify-content: flex-end; /* Logo en sağa hizalandı */
             align-items: center;
             position: sticky;
             top: 0;
@@ -37,14 +36,13 @@ DOCTYPE html>
         }
 
         .logo {
-            /* İdeal boyut olarak 60x60 veya logonun estetiğine uygun bir değer */
             width: 60px; 
             height: 60px;
             border-radius: 8px; 
             display: block;
         }
 
-        /* AYIRICI SİYAH ÇİZGİ */
+        /* --- AYIRICI SİYAH ÇİZGİ --- */
         .divider {
             height: 2px;
             background-color: var(--siyah); /* Siyah çizgi */
@@ -59,7 +57,7 @@ DOCTYPE html>
             margin: 0 auto;
         }
 
-        /* 4 NAVİGASYON BANDI İÇİN STİLLER */
+        /* --- 4 NAVİGASYON BANDI STİLLERİ --- */
         .nav-bands {
             display: flex;
             gap: 20px; 
@@ -68,7 +66,7 @@ DOCTYPE html>
         }
 
         .nav-band-item {
-            flex: 1 1 200px; /* Her bir bandın esnek genişliği (Minimum 200px) */
+            flex: 1 1 200px; 
             background-color: #F8F8F8; 
             padding: 15px;
             border-radius: 10px;
@@ -89,7 +87,7 @@ DOCTYPE html>
             font-size: 1.1em;
         }
 
-        /* SEÇİM ALANLARI VE BUTONLAR */
+        /* --- SEÇİM ALANLARI VE BUTONLAR --- */
         select, button {
             width: 100%;
             padding: 10px;
@@ -101,6 +99,7 @@ DOCTYPE html>
 
         select {
             border: 1px solid #CCC;
+            background-color: white;
         }
 
         button {
@@ -115,22 +114,35 @@ DOCTYPE html>
             background-color: #45a049;
         }
 
-        /* KURAN METNİ GÖSTERİM ALANI */
+        /* --- KURAN METNİ GÖSTERİM ALANI --- */
         #quran-text {
             padding-top: 20px;
             line-height: 2.2; 
             font-size: 1.4em;
-            direction: rtl; 
-            text-align: justify;
+            /* Bu stiller, metin entegre edildiğinde etkinleştirilmelidir */
+            /* direction: rtl; 
+            text-align: justify; */
         }
 
-        /* ALT KISIM (FOOTER) */
+        /* --- ALT KISIM (FOOTER) --- */
         footer {
             background-color: var(--acik-sari); /* En altta Açık Sarı olsun */
             padding: 20px;
             text-align: center;
             color: #555;
             margin-top: 50px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* --- RESPONSIVE TASARIM --- */
+        @media (max-width: 768px) {
+            .nav-bands {
+                flex-direction: column; 
+            }
+            .content {
+                padding: 10px 20px;
+            }
         }
     </style>
 </head>
@@ -145,33 +157,47 @@ DOCTYPE html>
     <div class="divider"></div>
 
     <main class="content">
-        <h2>Kuran-ı Kerim Navigasyonu</h2>
+        <h1>Kuran-ı Kerim Seçim Rehberi</h1>
 
         <div class="nav-bands">
             
             <section id="pages-band" class="nav-band-item">
                 <h3>1. Sayfalar</h3>
-                <select id="page-select" aria-label="Sayfa Seçimi">
-                    </select>
+                <select id="page-select" aria-label="Sayfa Seçimi"></select>
                 <button id="go-to-page">Sayfaya Git</button>
             </section>
             
             <section id="sures-band" class="nav-band-item">
                 <h3>2. Sureler</h3>
-                <select id="sure-select" aria-label="Sure Seçimi">
-                    </select>
+                <select id="sure-select" aria-label="Sure Seçimi"></select>
                 <button id="go-to-sure">Sure Başına Git</button>
             </section>
 
             <section id="juz-band" class="nav-band-item">
                 <h3>3. Cüzler</h3>
-                <select id="cuz-select" aria-label="Cüz Seçimi">
-                    </select>
+                <select id="cuz-select" aria-label="Cüz Seçimi"></select>
                 <button id="go-to-cuz">Cüze Git</button>
             </section>
 
             <section id="ayah-band" class="nav-band-item">
                 <h3>4. Ayet Numaraları</h3>
-                <select id="ayah-select" aria-label="Ayet Seçimi">
-                    </select>
-                <button id="go-to-ayah">Ayete Git
+                <select id="ayah-select" aria-label="Ayet Seçimi"></select>
+                <button id="go-to-ayah">Ayete Git</button>
+            </section>
+        </div>
+
+        <hr>
+
+        <div id="quran-text">
+            <p>Lütfen yukarıdaki menüden bir seçim yaparak Kuran-ı Kerim okumasına başlayın.</p>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>© 2025 Kuran-ı Kerim Projesi | Tüm hakları saklıdır.</p>
+    </footer>
+
+    <script src="script.js"></script> 
+</body>
+</html>
