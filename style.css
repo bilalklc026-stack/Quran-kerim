@@ -3,45 +3,44 @@ body {
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #FFFFFF; /* Sayfa arkaplanı: Beyaz */
-    color: #333; /* Metin rengi */
+    color: #333; /* Genel metin rengi */
 }
 
 /* AÇIK SARI RENK TANIMLARI */
-/* Açık sarı tonu olarak hafif, krem rengine yakın bir sarı seçildi. */
 :root {
-    --acik-sari: #FFFACD; /* Lemon Chiffon - Çok açık ve okunaklı bir sarı */
+    --acik-sari: #FFFACD; /* Lemon Chiffon - İstediğiniz açık sarı tonu */
     --siyah: #000000;
 }
 
-/* BAŞLIK (HEADER) VE LOGO */
+/* --- BAŞLIK (HEADER) VE LOGO --- */
 header {
     background-color: var(--acik-sari); /* Çizginin üstü Açık Sarı */
     padding: 10px 20px;
     display: flex;
-    justify-content: flex-end; /* Logo en sağa */
+    justify-content: flex-end; /* Logo en sağa hizalandı */
     align-items: center;
-    position: sticky; /* İsteğe bağlı: Başlığı en üste sabitlemek için */
+    position: sticky; /* Sayfayı kaydırırken header'ın sabit kalması için (isteğe bağlı) */
     top: 0;
     z-index: 100;
 }
 
 .logo-container {
     cursor: pointer;
-    /* Logo fotoğrafınızın ideal boyutu: 60x60 veya benzeri */
 }
 
 .logo {
     width: 60px; 
     height: 60px;
-    border-radius: 8px; /* Yumuşak bir köşe eklendi */
+    border-radius: 8px; /* Köşe yuvarlaklığı */
+    display: block;
 }
 
-/* AYIRICI SİYAH ÇİZGİ */
+/* --- AYIRICI SİYAH ÇİZGİ --- */
 .divider {
     height: 2px;
     background-color: var(--siyah); /* Siyah çizgi */
-    margin-bottom: 30px; /* İçerikle arasında boşluk bırakır */
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px; 
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Çizgiye hafif gölge */
 }
 
 /* ANA İÇERİK */
@@ -51,7 +50,7 @@ header {
     margin: 0 auto;
 }
 
-/* 4 NAVİGASYON BANDI İÇİN STİLLER */
+/* --- 4 NAVİGASYON BANDI STİLLERİ --- */
 .nav-bands {
     display: flex;
     gap: 20px; /* Bantlar arası boşluk */
@@ -70,33 +69,34 @@ header {
 }
 
 .nav-band-item:hover {
-    transform: translateY(-2px); /* Hafif yukarı kalkma efekti */
+    transform: translateY(-2px); /* Mouse üzerine gelince hafif kalkma efekti */
 }
 
 .nav-band-item h3 {
     margin-top: 0;
-    color: #4CAF50; /* Başlık rengi olarak yeşil tonu kullanılabilir (İslami tema) */
+    color: #4CAF50; /* Başlık rengi (Yeşil tonu) */
     border-bottom: 1px solid #DDD;
     padding-bottom: 5px;
     font-size: 1.1em;
 }
 
-/* SEÇİM ALANLARI VE BUTONLAR */
+/* --- SEÇİM ALANLARI VE BUTONLAR --- */
 select, button {
     width: 100%;
     padding: 10px;
     margin-top: 10px;
     border-radius: 5px;
     font-size: 16px;
-    box-sizing: border-box;
+    box-sizing: border-box; /* Padding'in genişliğe dahil olmasını sağlar */
 }
 
 select {
     border: 1px solid #CCC;
+    background-color: white;
 }
 
 button {
-    background-color: #4CAF50; /* Yeşil butonda beyaz yazı */
+    background-color: #4CAF50; /* Yeşil "Git" butonu */
     color: white;
     border: none;
     cursor: pointer;
@@ -107,20 +107,32 @@ button:hover {
     background-color: #45a049;
 }
 
-/* KURAN METNİ GÖSTERİM ALANI */
+/* --- KURAN METNİ GÖSTERİM ALANI --- */
 #quran-text {
     padding-top: 20px;
-    line-height: 2.2; /* Ayetler arası okuma kolaylığı için satır aralığı */
+    line-height: 2.2; 
     font-size: 1.4em;
     direction: rtl; /* Arapça metin sağdan sola akmalıdır */
     text-align: justify;
 }
 
-/* ALT KISIM (FOOTER) */
+/* --- ALT KISIM (FOOTER) --- */
 footer {
     background-color: var(--acik-sari); /* En altta Açık Sarı olsun */
     padding: 20px;
     text-align: center;
     color: #555;
     margin-top: 50px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* --- RESPONSIVE TASARIM (Küçük ekranlar için) --- */
+@media (max-width: 768px) {
+    .nav-bands {
+        flex-direction: column; /* Mobil cihazlarda bantlar alt alta gelir */
+    }
+    .content {
+        padding: 10px 20px;
+    }
 }
