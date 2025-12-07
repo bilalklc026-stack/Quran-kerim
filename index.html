@@ -1,42 +1,26 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Metin Arşivi</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diyanet Kur'an Ayetleri</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="site-header">
-    <div class="brand">
-      <img src="assets/logo.svg" alt="Metin Arşivi logo" class="logo">
-      <h1>Metin Arşivi</h1>
-    </div>
-    <div class="search-wrap">
-      <input id="search" type="search" placeholder="Ara... (başlık veya metin içinde ara)">
-    </div>
-  </header>
-
-  <main class="layout">
-    <aside class="sidebar">
-      <h2>Metinler</h2>
-      <ul id="items" class="items-list" aria-live="polite"></ul>
-    </aside>
-
-    <section class="reader">
-      <article id="content">
-        <h2 id="content-title">Bir metin seçin</h2>
-        <div id="content-body" class="content-body">
-          <p>Sol taraftan bir başlık seçin ya da arama yapın.</p>
+    <div class="container">
+        <h1>Kur'an Ayetlerini Görüntüleme</h1>
+        <p>Görüntülemek istediğiniz cüz numarasını (1-30 arası) giriniz.</p>
+        
+        <input type="number" id="juz-input" min="1" max="30" placeholder="Örn: 5">
+        <button id="fetch-button">Ayetleri Getir</button>
+        
+        <hr>
+        
+        <div id="verse-output">
+            <p>Sonuçlar burada listelenecektir.</p>
         </div>
-      </article>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <p>Bu site örnek metinleri listeler. İçeriklerde yazar isimleri veya atıflar yoktur.</p>
-  </footer>
-
-  <script src="script.js" defer></script>
+    </div>
+    
+    <script src="script.js"></script>
 </body>
 </html>
