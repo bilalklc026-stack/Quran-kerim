@@ -1,5 +1,7 @@
-const API_BASE = "https://acikkaynakkuran-dev.diyanet.gov.tr/api/v1";
-const API_KEY = "218|0iV4nIwFhzy9DMtDq1cZcyLu4Kz8F3s7SiltlP43482ed659";
+const PAGE_API = "https://semarketir.github.io/quranjson-web/pages/index.json";
+const JUZ_API = "https://semarketir.github.io/quranjson-web/juzs/index.json";
+const SURAH_API = "https://semarketir.github.io/quranjson-web/surahs/index.json";
+const AYAH_API_ROOT = "https://semarketir.github.io/quranjson-web/ayahs/";
 
 const selectArea = document.getElementById("select-area");
 const displayArea = document.getElementById("display-area");
@@ -8,7 +10,7 @@ const tabs = {
     surah: document.getElementById("surah-tab"),
     juz: document.getElementById("juz-tab"),
     ayah: document.getElementById("ayah-tab"),
-}
+};
 const logo = document.getElementById("site-logo");
 logo.addEventListener('click', () => window.location.reload());
 
@@ -29,18 +31,22 @@ function setActiveTab(tab) {
 }
 
 // Sayfalar
-function initPage() {
-    selectArea.innerHTML = `
-        <label>Sayfa No: 
-            <select id="page-select">${[...Array(604)].map((_,i)=>`<option value="${i+1}">${i+1}</option>`).join("")}</select>
-        </label>
-        <button id="show-page-btn">Sayfayı Göster</button>
-    `;
+async function initPage() {
+    selectArea.innerHTML = `<label>Sayfa No: <select id="page-select"></select></label>
+    <button id="show-page-btn">Sayfayı Göster</button>`;
+    const pages = await fetch(PAGE_API).then(r => r.json());
+    document.getElementById("page-select").innerHTML = pages.map(p =>
+        `<option value="${p.page}">${p.page}</option>`).join("");
     document.getElementById("show-page-btn").onclick = async () => {
-        const page = document.getElementById("page-select").value;
+        const pageNum = document.getElementById("page-select").value;
         displayArea.innerHTML = '<em>Sayfa yükleniyor...</em>';
-        let ayahData = await getAyatByPage(page);
-        displayAyatList(ayahData, `Sayfa No: ${page}`);
+        const page = pages.find(p => p.page == pageNum);
+        let ayahList = [];
+        for(let i=page.start; i<=page.end; i++) {
+            let ayahData = await fetch(AYAH_API_ROOT + `${i}.json`).then(res=>res.json());
+            ayahList.push(ayahData);
+        }
+        displayAyatList(ayahList, `Sayfa ${pageNum}`);
     }
 }
 
@@ -48,75 +54,65 @@ function initPage() {
 async function initSurah() {
     selectArea.innerHTML = `<label>Sure: <select id="surah-select"></select></label>
     <button id="show-surah-btn">Sureyi Göster</button>`;
-    const sures = await fetch(`${API_BASE}/Surer`, {headers:{'Authorization':`Bearer ${API_KEY}`}}).then(r=>r.json());
-    document.getElementById("surah-select").innerHTML = sures.map(sure=>
-        `<option value="${sure.id}">${sure.id}. ${sure.name}</option>`).join("");
+    const surahs = await fetch(SURAH_API).then(r => r.json());
+    document.getElementById("surah-select").innerHTML = surahs.map(s =>
+        `<option value="${s.id}">${s.id}. ${s.name}</option>`).join("");
     document.getElementById("show-surah-btn").onclick = async () => {
         const surahId = document.getElementById("surah-select").value;
         displayArea.innerHTML = '<em>Sure yükleniyor...</em>';
-        const ayat = await fetch(`${API_BASE}/Surer/${surahId}/ayetler`, {headers:{'Authorization':`Bearer ${API_KEY}`}}).then(r=>r.json());
-        displayAyatList(ayat, `Sure`);
+        const surahObj = surahs.find(s => s.id == surahId);
+        let ayahList = [];
+        for(let n = surahObj.start; n <= surahObj.end; n++) {
+            let ayahData = await fetch(AYAH_API_ROOT + `${n}.json`).then(res=>res.json());
+            ayahList.push(ayahData);
+        }
+        displayAyatList(ayahList, `${surahObj.name} Suresi`);
     }
 }
 
 // Cüzler
-function initJuz() {
-    selectArea.innerHTML = `
-        <label>Cüz No: 
-            <select id="juz-select">${[...Array(30)].map((_,i)=>`<option value="${i+1}">${i+1}</option>`).join("")}</select>
-        </label>
-        <button id="show-juz-btn">Cüzü Göster</button>
-    `;
+async function initJuz() {
+    selectArea.innerHTML = `<label>Cüz No: <select id="juz-select"></select></label>
+    <button id="show-juz-btn">Cüzü Göster</button>`;
+    const juzList = await fetch(JUZ_API).then(r => r.json());
+    document.getElementById("juz-select").innerHTML = juzList.map(j => `<option value="${j.id}">${j.id}</option>`).join("");
     document.getElementById("show-juz-btn").onclick = async () => {
-        const juz = document.getElementById("juz-select").value;
+        const juzId = document.getElementById("juz-select").value;
         displayArea.innerHTML = '<em>Cüz yükleniyor...</em>';
-        let juzAyat = await fetch(`${API_BASE}/Cuzler/${juz}/verses`, {headers: {'Authorization': `Bearer ${API_KEY}`}}).then(r=>r.json());
-        displayAyatList(juzAyat, `Cüz No: ${juz}`);
+        const juzObj = juzList.find(j => j.id == juzId);
+        let ayahList = [];
+        for(let n = juzObj.start; n <= juzObj.end; n++) {
+            let ayahData = await fetch(AYAH_API_ROOT + `${n}.json`).then(res=>res.json());
+            ayahList.push(ayahData);
+        }
+        displayAyatList(ayahList, `Cüz ${juzId}`);
     }
 }
 
 // Ayetler
-async function initAyah() {
+function initAyah() {
     selectArea.innerHTML = `
-        <label>Ayet Ara: <input id="ayah-input" type="number" min="1" placeholder="Ayet numarası"></label>
+        <label>Ayet No: <input id="ayah-input" type="number" min="1" placeholder="Ayet numarası"></label>
         <button id="show-ayah-btn">Ayetleri Göster</button>
     `;
     document.getElementById("show-ayah-btn").onclick = async () => {
         const num = document.getElementById("ayah-input").value;
-        if(!num) return displayArea.innerHTML = "<em>Lütfen bir ayet numarası giriniz.</em>";
+        if (!num || num < 1 || num > 6236) return displayArea.innerHTML = "<em>Doğru aralıkta ayet numarası giriniz (1-6236).</em>";
         displayArea.innerHTML = '<em>Ayet yükleniyor...</em>';
-        let allAyah = [];
-        try {
-            for(let surah = 1; surah <= 114; ++surah) {
-                let ayat = await fetch(`${API_BASE}/Surer/${surah}/ayetler`, {headers:{'Authorization':`Bearer ${API_KEY}`}}).then(r=>r.json());
-                allAyah = allAyah.concat(ayat.filter(a => a.verseNumber == num));
-            }
-            displayAyatList(allAyah, `Ayet No: ${num} (Bütün Sureler)`);
-        } catch(err) {
-            displayArea.innerHTML = `<span style="color:red;">Veri alınamadı.</span>`;
-        }
+        let ayahData = await fetch(AYAH_API_ROOT + `${num}.json`).then(res=>res.json());
+        displayAyatList([ayahData], `Ayet No: ${num}`);
     }
 }
 
-// Ayetleri sayfa gibi göster
 function displayAyatList(ayatList, title) {
-    if(!Array.isArray(ayatList) || ayatList.length === 0)
+    if (!Array.isArray(ayatList) || ayatList.length === 0)
         return displayArea.innerHTML = "<em>Herhangi bir ayet bulunamadı.</em>";
     displayArea.innerHTML = `<h2>${title}</h2>
     <div class="ayat-page-layout">
-        ${ayatList.map(a=>`
-            <div class="ayat-box">
-                <span class="ayat-number">${a.verseNumber}</span> 
-                <span class="surah">${a.surahName || (a.sureAdi || "-")}</span>
-                <div class="ayat-text">${a.text || a.ayet || ""}</div>
-            </div>
-        `).join("")}
+        ${ayatList.map(a => `<div class="ayat-box">
+            <span class="ayat-number">${a.verse_number}</span>
+            <span class="surah">${a.surah_name}</span>
+            <div class="ayat-text">${a.text}</div>
+        </div>`).join("")}
     </div>`;
-}
-
-// (Sayfa karşılığı ayet) -- Kendi datasetinizle zenginleştirilebilir
-async function getAyatByPage(page) {
-    let cüz = Math.ceil(page/20);
-    let ayat = await fetch(`${API_BASE}/Cuzler/${cüz}/verses`, {headers: {'Authorization': `Bearer ${API_KEY}`}}).then(r=>r.json());
-    return ayat.filter(a => Math.abs(page-cüz*20)<3); // Algoritmik, örnek için
 }
