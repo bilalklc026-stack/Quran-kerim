@@ -1,138 +1,118 @@
-/* GENEL STİLLER VE RENK PALETİ */
-body {
-    margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #FFFFFF; /* Sayfa arkaplanı: Beyaz */
-    color: #333; /* Genel metin rengi */
+:root{
+  --light-yellow: #fff7c2;
+  --white: #ffffff;
+  --muted: #666;
+  --accent: #222;
 }
 
-/* AÇIK SARI RENK TANIMLARI */
-:root {
-    --acik-sari: #FFFACD; /* Lemon Chiffon - İstediğiniz açık sarı tonu */
-    --siyah: #000000;
+/* Sayfa düzeni */
+body{
+  margin:0;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  background: var(--white);
+  color: #111;
 }
 
-/* --- BAŞLIK (HEADER) VE LOGO --- */
-header {
-    background-color: var(--acik-sari); /* Çizginin üstü Açık Sarı */
-    padding: 10px 20px;
-    display: flex;
-    justify-content: flex-end; /* Logo en sağa hizalandı */
-    align-items: center;
-    position: sticky; /* Sayfayı kaydırırken header'ın sabit kalması için (isteğe bağlı) */
-    top: 0;
-    z-index: 100;
+/* Üst bölüm (açık sarı) */
+.topHeader{
+  background: var(--light-yellow);
+  padding: 10px 20px;
+  display:flex;
+  justify-content:flex-end; /* logo sağa */
+  align-items:center;
 }
 
-.logo-container {
-    cursor: pointer;
+/* logo boyutu ideal */
+#logo{
+  height:48px;
+  width:auto;
+  cursor:pointer;
+  object-fit:contain;
+  border-radius:6px;
 }
 
-.logo {
-    width: 60px; 
-    height: 60px;
-    border-radius: 8px; /* Köşe yuvarlaklığı */
-    display: block;
+/* siyah çizgi */
+.blackLine{
+  height:2px;
+  background:#000;
+  width:100%;
 }
 
-/* --- AYIRICI SİYAH ÇİZGİ --- */
-.divider {
-    height: 2px;
-    background-color: var(--siyah); /* Siyah çizgi */
-    margin-bottom: 30px; 
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Çizgiye hafif gölge */
+/* Menü bant */
+.menuBar{
+  display:flex;
+  gap:12px;
+  padding:12px 18px;
+  background: var(--white);
+  border-bottom:1px solid #eee;
+  justify-content:center;
+}
+.menuBtn{
+  padding:8px 14px;
+  border-radius:8px;
+  background:#f3f3f3;
+  border:1px solid #e1e6ee;
+  cursor:pointer;
+  font-weight:600;
+}
+.menuBtn:hover{ background:#eceff6; }
+
+/* Açılır paneller */
+.panelWrap{ padding:12px 18px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap; background:var(--white); }
+.panel{ display:none; background:#fbfbfb; padding:12px; border-radius:8px; border:1px solid #eee; min-width:280px; }
+.panel input, .panel select{ padding:8px; margin:6px 6px 6px 0; border-radius:6px; border:1px solid #ddd; width:120px; }
+.panel button{ padding:8px 10px; margin-left:6px; cursor:pointer; }
+
+/* Viewer */
+#viewer{ max-width:900px; margin:18px auto; padding:0 12px; }
+.pageControls{ display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:12px; }
+.pageControls button{ padding:8px 10px; cursor:pointer; border-radius:6px; border:1px solid #ddd; background:#fff; }
+#currentPageLabel{ font-weight:700; }
+
+/* Mushaf-like page */
+.pageView{
+  background: var(--white);
+  padding:28px;
+  border-radius:12px;
+  box-shadow: 0 8px 30px rgba(15,20,30,0.06);
+  border:1px solid #f0f0f0;
+  direction: rtl; /* Arapça için sağdan sola */
+  text-align: right;
+  min-height: 360px;
 }
 
-/* ANA İÇERİK */
-.content {
-    padding: 20px 40px;
-    max-width: 1200px;
-    margin: 0 auto;
+/* Her ayet kutusu */
+.verseBox{
+  margin: 10px 0;
+  padding: 10px 14px;
+  border-radius:8px;
+}
+.verseNumber{
+  display:block;
+  font-weight:700;
+  color:var(--accent);
+  margin-bottom:6px;
+}
+.arabicText{
+  font-size:28px;
+  line-height:1.9;
+  direction: rtl;
+  font-family: "Scheherazade New", "Amiri", serif;
+  word-break: break-word;
 }
 
-/* --- 4 NAVİGASYON BANDI STİLLERİ --- */
-.nav-bands {
-    display: flex;
-    gap: 20px; /* Bantlar arası boşluk */
-    flex-wrap: wrap; /* Küçük ekranlarda alta kayması için */
-    margin-bottom: 40px;
+/* Alt açık sarı */
+.bottomBar{
+  background: var(--light-yellow);
+  padding:16px;
+  text-align:center;
+  margin-top:20px;
+  border-top:1px solid rgba(0,0,0,0.04);
 }
 
-.nav-band-item {
-    flex: 1 1 200px; /* Her bir bandın esnek genişliği (Minimum 200px) */
-    background-color: #F8F8F8; /* Hafif bir gri arkaplan */
-    padding: 15px;
-    border-radius: 10px;
-    border: 1px solid #EEE;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    transition: transform 0.2s;
-}
-
-.nav-band-item:hover {
-    transform: translateY(-2px); /* Mouse üzerine gelince hafif kalkma efekti */
-}
-
-.nav-band-item h3 {
-    margin-top: 0;
-    color: #4CAF50; /* Başlık rengi (Yeşil tonu) */
-    border-bottom: 1px solid #DDD;
-    padding-bottom: 5px;
-    font-size: 1.1em;
-}
-
-/* --- SEÇİM ALANLARI VE BUTONLAR --- */
-select, button {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    border-radius: 5px;
-    font-size: 16px;
-    box-sizing: border-box; /* Padding'in genişliğe dahil olmasını sağlar */
-}
-
-select {
-    border: 1px solid #CCC;
-    background-color: white;
-}
-
-button {
-    background-color: #4CAF50; /* Yeşil "Git" butonu */
-    color: white;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-button:hover {
-    background-color: #45a049;
-}
-
-/* --- KURAN METNİ GÖSTERİM ALANI --- */
-#quran-text {
-    padding-top: 20px;
-    line-height: 2.2; 
-    font-size: 1.4em;
-    direction: rtl; /* Arapça metin sağdan sola akmalıdır */
-    text-align: justify;
-}
-
-/* --- ALT KISIM (FOOTER) --- */
-footer {
-    background-color: var(--acik-sari); /* En altta Açık Sarı olsun */
-    padding: 20px;
-    text-align: center;
-    color: #555;
-    margin-top: 50px;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-/* --- RESPONSIVE TASARIM (Küçük ekranlar için) --- */
-@media (max-width: 768px) {
-    .nav-bands {
-        flex-direction: column; /* Mobil cihazlarda bantlar alt alta gelir */
-    }
-    .content {
-        padding: 10px 20px;
-    }
+/* Responsive */
+@media (max-width:720px){
+  .panel{ min-width:100%; }
+  .pageView{ padding:18px; }
+  .arabicText{ font-size:22px; }
 }
