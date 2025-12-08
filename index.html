@@ -1,203 +1,87 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kuran-ı Kerim Navigasyonu</title>
-
-    <style>
-        /* GENEL STİLLER VE RENK PALETİ */
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #FFFFFF; /* Beyaz */
-            color: #333;
-        }
-
-        :root {
-            --acik-sari: #FFFACD; /* Açık Sarı */
-            --siyah: #000000;
-        }
-
-        /* --- BAŞLIK (HEADER) VE LOGO --- */
-        header {
-            background-color: var(--acik-sari); /* Çizginin üstü Açık Sarı */
-            padding: 10px 20px;
-            display: flex;
-            justify-content: flex-end; /* Logo en sağa hizalandı */
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .logo-container {
-            cursor: pointer;
-        }
-
-        .logo {
-            width: 60px; 
-            height: 60px;
-            border-radius: 8px; 
-            display: block;
-        }
-
-        /* --- AYIRICI SİYAH ÇİZGİ --- */
-        .divider {
-            height: 2px;
-            background-color: var(--siyah); /* Siyah çizgi */
-            margin-bottom: 30px; 
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-        }
-
-        /* ANA İÇERİK */
-        .content {
-            padding: 20px 40px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        /* --- 4 NAVİGASYON BANDI STİLLERİ --- */
-        .nav-bands {
-            display: flex;
-            gap: 20px; 
-            flex-wrap: wrap; 
-            margin-bottom: 40px;
-        }
-
-        .nav-band-item {
-            flex: 1 1 200px; 
-            background-color: #F8F8F8; 
-            padding: 15px;
-            border-radius: 10px;
-            border: 1px solid #EEE;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            transition: transform 0.2s;
-        }
-
-        .nav-band-item:hover {
-            transform: translateY(-2px);
-        }
-
-        .nav-band-item h3 {
-            margin-top: 0;
-            color: #4CAF50; 
-            border-bottom: 1px solid #DDD;
-            padding-bottom: 5px;
-            font-size: 1.1em;
-        }
-
-        /* --- SEÇİM ALANLARI VE BUTONLAR --- */
-        select, button {
-            width: 100%;
-            padding: 10px;
-            margin-top: 10px;
-            border-radius: 5px;
-            font-size: 16px;
-            box-sizing: border-box;
-        }
-
-        select {
-            border: 1px solid #CCC;
-            background-color: white;
-        }
-
-        button {
-            background-color: #4CAF50; 
-            color: white;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-
-        /* --- KURAN METNİ GÖSTERİM ALANI --- */
-        #quran-text {
-            padding-top: 20px;
-            line-height: 2.2; 
-            font-size: 1.4em;
-            /* Bu stiller, metin entegre edildiğinde etkinleştirilmelidir */
-            /* direction: rtl; 
-            text-align: justify; */
-        }
-
-        /* --- ALT KISIM (FOOTER) --- */
-        footer {
-            background-color: var(--acik-sari); /* En altta Açık Sarı olsun */
-            padding: 20px;
-            text-align: center;
-            color: #555;
-            margin-top: 50px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        /* --- RESPONSIVE TASARIM --- */
-        @media (max-width: 768px) {
-            .nav-bands {
-                flex-direction: column; 
-            }
-            .content {
-                padding: 10px 20px;
-            }
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kuran-ı Kerim - Sayfa Görünümü</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-    <header>
-        <a href="index.html" class="logo-container">
-            <img src="https://share.icloud.com/photos/0bdpqt5QAnJY0MCSP9YMqAjwg" alt="Kuran Sitesi Logo" class="logo">
-        </a>
-    </header>
+  <!-- ÜST: açık sarı ve logo sağda -->
+  <header class="topHeader">
+    <div class="topRight">
+      <!-- Eğer local logo kullanacaksan burayı "logo.png" ile değiştir -->
+      <img id="logo" src="https://share.icloud.com/photos/0bdpqt5QAnJY0MCSP9YMqAjwg" alt="logo">
+    </div>
+  </header>
 
-    <div class="divider"></div>
+  <!-- siyah çizgi -->
+  <div class="blackLine"></div>
 
-    <main class="content">
-        <h1>Kuran-ı Kerim Seçim Rehberi</h1>
+  <!-- Menü bantları -->
+  <nav class="menuBar">
+    <button class="menuBtn" data-target="pageMenu">Sayfalar</button>
+    <button class="menuBtn" data-target="sureMenu">Sureler</button>
+    <button class="menuBtn" data-target="juzMenu">Cüzler</button>
+    <button class="menuBtn" data-target="ayetMenu">Ayetler</button>
+  </nav>
 
-        <div class="nav-bands">
-            
-            <section id="pages-band" class="nav-band-item">
-                <h3>1. Sayfalar</h3>
-                <select id="page-select" aria-label="Sayfa Seçimi"></select>
-                <button id="go-to-page">Sayfaya Git</button>
-            </section>
-            
-            <section id="sures-band" class="nav-band-item">
-                <h3>2. Sureler</h3>
-                <select id="sure-select" aria-label="Sure Seçimi"></select>
-                <button id="go-to-sure">Sure Başına Git</button>
-            </section>
+  <!-- Açılır paneller -->
+  <div class="panelWrap">
 
-            <section id="juz-band" class="nav-band-item">
-                <h3>3. Cüzler</h3>
-                <select id="cuz-select" aria-label="Cüz Seçimi"></select>
-                <button id="go-to-cuz">Cüze Git</button>
-            </section>
+    <!-- Sayfalar panel -->
+    <div id="pageMenu" class="panel">
+      <label>Sayfa No:</label>
+      <input id="pageInput" type="number" min="1" placeholder="Sayfa numarası">
+      <button id="goPageBtn">Git</button>
+      <div class="panelHint">Her sayfa en fazla <strong>10 ayet</strong> içerir (Model B).</div>
+    </div>
 
-            <section id="ayah-band" class="nav-band-item">
-                <h3>4. Ayet Numaraları</h3>
-                <select id="ayah-select" aria-label="Ayet Seçimi"></select>
-                <button id="go-to-ayah">Ayete Git</button>
-            </section>
-        </div>
+    <!-- Sureler panel -->
+    <div id="sureMenu" class="panel">
+      <label>Sure seç:</label>
+      <select id="sureSelect"></select>
+      <button id="goSureBtn">Git</button>
+    </div>
 
-        <hr>
+    <!-- Cüzler panel -->
+    <div id="juzMenu" class="panel">
+      <label>Cüz seç:</label>
+      <select id="juzSelect"></select>
+      <button id="goJuzBtn">Git</button>
+    </div>
 
-        <div id="quran-text">
-            <p>Lütfen yukarıdaki menüden bir seçim yaparak Kuran-ı Kerim okumasına başlayın.</p>
-        </div>
+    <!-- Ayet panel -->
+    <div id="ayetMenu" class="panel">
+      <label>Sure No:</label>
+      <input id="chapterInput" type="number" min="1" placeholder="Sure no">
+      <label>Ayet No:</label>
+      <input id="verseInput" type="number" min="1" placeholder="Ayet no">
+      <button id="goAyetBtn">Git</button>
+      <div class="panelHint">Bu işlem ilgili ayetin bulunduğu sayfayı açar.</div>
+    </div>
 
-    </main>
+  </div>
 
-    <footer>
-        <p>© 2025 Kuran-ı Kerim Projesi | Tüm hakları saklıdır.</p>
-    </footer>
+  <!-- İçerik / sayfa gösterimi -->
+  <main id="viewer">
+    <div id="pageControls" class="pageControls">
+      <button id="prevPage">◀ Önceki</button>
+      <span id="currentPageLabel">Sayfa —</span>
+      <button id="nextPage">Sonraki ▶</button>
+    </div>
 
-    <script src="script.js"></script> 
+    <section id="pageView" class="pageView">
+      <!-- Ayetler buraya render edilecek -->
+    </section>
+  </main>
+
+  <!-- Alt açık sarı -->
+  <footer class="bottomBar">
+    <small>Kur'an-ı Kerim — Sayfa görünümü (Her sayfada en fazla 10 ayet)</small>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
